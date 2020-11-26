@@ -3,7 +3,7 @@ import math
 import matplotlib.pyplot as plt
 
 #PATH
-common_path="/home/Changwan/Jupyter/Python/LRSnotefromDr.Kobayashi/SFTP_6/"
+common_path="/home/changwan/Lunar-Radar-Sounder/"
 
 #item_number1="QL_05km_08996_89600_92099.dat"  #SFTP_6 COLUMNS:5600
 #item_number1="QL_05km_08878_89000_90199.dat"#SFTP_2 COLUMNS:1000
@@ -40,10 +40,15 @@ SAR_B_SCAN_IMAGE=np.zeros((ROWS,COLUMNS))
 a,b,c,i=0,0,0,0
 
 
+
+logic_1=input("Do you want to indicate QL_LRS data in the particular latitude?(y/n)")
+
+if logic_1 == "y" :
+  logic_2=input("Type certain latitude that you want, please")
+  logic_2=int(logic_2)
+
 with open(input_path, "rb") as f:
  for i in range(COLUMNS):
-
-# i=0 
 
 #Header 
   Header0=f.read(4)   #This is the key. The 4 byte. Empty space. 
@@ -63,14 +68,22 @@ with open(input_path, "rb") as f:
   Att=(H_nadir_0[i]/100.0e3)*(H_nadir_0[i]/100.0e3)  #Normalization
   #The Valus is the power so that we need square. 
 
-#print('TI[',i,']=',TI[i])
-#print(type(TI[i]))
-#print('Lat_0[',i,']=',Lat_0[i])
-#print(type(Lat_0[i]))
-#print('Long_0[',i,']=',Long_0[i])
-#print('H_datum_0[',i,']=',H_datum_0[i])
-#print('H_nadir_0[',i,']=',H_nadir_0[i])
- 
+  #print(Lat_0[i])
+
+
+  if logic_2<0:
+
+   if Lat_0[i]-0.1<logic_2 and logic_2<Lat_0[i]+0.5:
+    print("TI[",i,"]=",TI[i]) 
+    print("Lat_[",i,"]=",float(Lat_0[i])) 
+   
+  elif logic_2>0:
+
+   if Lat_0[i]-0.5<logic_2 and logic_2<Lat_0[i]+1.0:
+    print("TI[",i,"]=",TI[i]) 
+    print("Lat_[",i,"]=",float(Lat_0[i])) 
+
+
   for a in range(ROWS):	
    data1=f.read(4)	  
    
@@ -85,6 +98,7 @@ with open(input_path, "rb") as f:
    #int(IMAGE_REAL_POWER[c][0])
    #IMAGE_REAL_POWER[c][0]=2.0*IMAGE_REAL_POWER[c][0]
    SAR_B_SCAN_IMAGE[c][i]=IMAGE_REAL_POWER[c][0]
+
 
 #GRAPH
 
