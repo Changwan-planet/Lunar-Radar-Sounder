@@ -19,16 +19,20 @@ common_path="/home/changwan/Lunar-Radar-Sounder/"
 #item_number1="QL_05km_09041_94500_96999.dat" #SFTP_6 COLUMNS: 1000
 #item_number1="QL_05km_08888_33600_35999.dat" #SFTP_2 COLUMNS: 1000
 #item_number1="QL_05km_08900_17300_19799.dat" #SFTP_2 COLUMNS: 1000
-item_number1="QL_05km_09041_87400_89899.dat"  #SFTP_6 COLUMNS: 1000
+#item_number1="QL_05km_09041_87400_89899.dat"  #SFTP_6 COLUMNS: 1000
+#item_number1="QL_05km_09044_35700_38099.dat"
+#item_number1="QL_05km_08831_66500_71299.dat"
+item_number1="QL_05km_08996_89600_92099.dat"
+
 input_path=common_path+item_number1
 
 #Label
 ROWS=753
-COLUMNS=1000
+COLUMNS=5000
 
 #HEADER, intialization
 TI=np.zeros(COLUMNS,dtype=np.int)
-Lat_0=np.zeros(COLUMNS,dtype=np.int)
+Lat_0=np.zeros(COLUMNS,dtype=np.float)
 Long_0=np.zeros(COLUMNS) 
 H_datum_0=np.zeros(COLUMNS)
 H_nadir_0=np.zeros(COLUMNS) 
@@ -59,6 +63,9 @@ with open(input_path, "rb") as f:
   Header5=f.read(4)
 
   TI[i]=np.frombuffer(Header1,dtype="i4")
+  if TI[i]==0:
+    print("@@@Please downsize the number of columns@@@")
+  #print("i=",i,"TI=",TI[i])
   Lat_0[i]=np.frombuffer(Header2,dtype="<f4")
   Long_0[i]=np.frombuffer(Header3,dtype="<f4")
   H_datum_0[i]=np.frombuffer(Header4,dtype="<f4")
@@ -71,17 +78,18 @@ with open(input_path, "rb") as f:
   #print(Lat_0[i])
 
 
-  if logic_2<0:
+  if logic_2 < 0:
 
    if Lat_0[i]-0.1<logic_2 and logic_2<Lat_0[i]+0.5:
     print("TI[",i,"]=",TI[i]) 
-    print("Lat_[",i,"]=",float(Lat_0[i])) 
-   
-  elif logic_2>0:
+    print("Lat_0[",i,"]=",float(Lat_0[i])) 
+    print("Long_0[",i,"]=",float(Long_0[i]))
+  elif logic_2 > 0:
 
    if Lat_0[i]-0.5<logic_2 and logic_2<Lat_0[i]+1.0:
     print("TI[",i,"]=",TI[i]) 
     print("Lat_[",i,"]=",float(Lat_0[i])) 
+    print("Long_0[",i,"]=",float(Long_0[i]))
 
 
   for a in range(ROWS):	
@@ -93,7 +101,12 @@ with open(input_path, "rb") as f:
   for c in range(ROWS):
    
   #IMAGE_REAL_POWER[c][0]=10.0*np.log10(IMAGE_REAL_POWER[c][0])   
-   IMAGE_REAL_POWER[c][0]=3.0*(10.0*(np.log10(IMAGE_REAL_POWER[c][0])))+20
+   if IMAGE_REAL_POWER[c][0] != 0:
+      
+     IMAGE_REAL_POWER[c][0]=3.0*(10.0*(np.log10(IMAGE_REAL_POWER[c][0])))+20
+
+   elif IMAGE_REAL_POWER[c][0] == 0:
+     IMAGE_REAL_POWER[c][0] = 0
 
    #int(IMAGE_REAL_POWER[c][0])
    #IMAGE_REAL_POWER[c][0]=2.0*IMAGE_REAL_POWER[c][0]
