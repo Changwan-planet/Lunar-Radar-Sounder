@@ -4,15 +4,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-path="HEADER_Long_orbit_LRS.txt"
+path="08831_60600_62399_HEADER_Long_orbit_LRS.txt"
 #path2="B_SCAN_LRS.txt"
 
 
 #Reading data
 data=np.loadtxt(path)
 #data2=np.loadtxt(path2)
-
-
 
 #DataFrame
 ROW=np.linspace(0,(data.shape[0]-1),data.shape[0],dtype='int64')
@@ -24,7 +22,7 @@ data_2=pd.DataFrame(data,index=ROW,columns=COL)
 
 #Data information
 print("***data_2.info()***")
-ata_2.info()
+data_2.info()
 
 print('\n')
 print("data_2.shape=",data_2.shape)
