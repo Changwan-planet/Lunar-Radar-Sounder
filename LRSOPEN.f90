@@ -9,7 +9,7 @@ Program LRSOPEN
 Implicit none
 
 INTEGER ::i,j,k
-INTEGER :: IOstatus
+INTEGER :: OPENSTATUS
 
 INTEGER :: Start_Step
 CHARACTER ::OT, TI
@@ -19,14 +19,22 @@ REAL :: Delay
 REAL :: SC_Lat, SC_Long,SC_Alt,Rang0
 REAL, Dimension (1000) :: SAR_Real,SAR_Imag 
 
-Open(10, File='LRS_SAR05KM_C_00S_053039E.tbl',form='unformatted',status='old')
+!Open(10, File='LRS_SAR05KM_C_60N_002339E.tbl',form='unformatted',status='old',ACTION='READ',POSITION='REWIND',IOSTAT=OPENSTATUS)
+
+Open(10, File='LRS_SAR05KM_C_60N_002339E.tbl',access='stream',status='old',ACTION='READ',POSITION='REWIND',IOSTAT=OPENSTATUS)
+
+
 Open(11, File='LRStest.txt',status='replace')
 
 
 Do i = 1,1988
 
     Read(10,End=200) Parsing
-   
+
+IF (OPENSTATUS < 0) EXIT
+IF (OPENSTATUS > 0) STOP "***CANNOT OOPE FILE***"
+
+  
 200 continue
 
     Read(10,End=300) SAR_Real(i)
@@ -52,7 +60,7 @@ End do
     ! Write(11,*)'Max=',Maxval(Intensity) 
     !----------------------------------------------! 
     !End if 
-    !j=j+1
-    
+    j=j+1
+print *, j  
 End Program LRSOPEN
 

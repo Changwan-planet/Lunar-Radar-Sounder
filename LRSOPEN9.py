@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 #input_path="LRS_SAR05KM_C_00N_015204E.tbl"
 
 common_path="LRS_SAR05KM_C_"
-item_number="60N_002871E"
+item_number="60N_003446E"
 ext1=".tbl"
 ext2=".txt"
 ext3=".lbl"

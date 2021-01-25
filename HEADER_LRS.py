@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-path="HEADER_05N_038559E.txt"
+path="HEADER_60N_003446E.txt"
 
 
 
@@ -21,7 +21,7 @@ data2=pd.DataFrame(data,columns,index)
 #Data information
 
 data2.info()
-#data.head(10)
+data2.head(10)
 print(data2.shape)
 
 #data2.loc[['SC_Long']]=data2.loc[['SC_Long']]-360

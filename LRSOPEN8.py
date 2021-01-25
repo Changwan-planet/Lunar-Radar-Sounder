@@ -12,12 +12,13 @@ import matplotlib.pyplot as plt
 #input_path="LRS_SAR05KM_C_00N_015204E.tbl"
 
 common_path="LRS_SAR05KM_C_"
-item_number1="05N_038559E.tbl"
-item_number2="05N_038559E.txt"
-item_number3="05N_038559E.lbl"
-input_path=common_path+item_number1
-output_path="HEADER_"+item_number2
-Label_path=common_path+item_number3
+item_number="60N_002339E"
+ext1=".tbl"
+ext2=".txt"
+ext3=".lbl"
+nput_path=common_path+item_number+ext1
+output_path="HEADER_"+item_number+ext2
+Label_path=common_path+item_number+ext3
 
 #READING ROWS FROM LABEL FILE
 #Label
